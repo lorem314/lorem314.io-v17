@@ -42,14 +42,14 @@ const getItems = (sectionLines: string[]) => {
       item.items = getItems(sectionLines)
     }
   }
-  if (items.length === 0) return null
+  if (items.length === 0) return []
   else return items
 }
 
 const computeMdxMeta = (rawBody: string) => {
   const lines = rawBody.split(/\r?\n/)
   const sectionLines = []
-  const statistic = { code: 0, image: 0, text: 0 }
+  const statistic = { codeblock: 0, image: 0, text: 0 }
   const flag = {
     codeblock: { isStarted: false, backtickNumber: 0 },
   }
@@ -73,6 +73,7 @@ const computeMdxMeta = (rawBody: string) => {
       if (line.startsWith("</Section")) sectionLines.push(line)
     } else if (!flag.codeblock.isStarted && isMarkdownImage(line)) {
       // ![alt](link)
+      statistic.image++
     } else if (!flag.codeblock.isStarted && isMdCodeBlockStart(line)) {
       // console.log("[CodeBlock Start]", line)
       const matched = line.match(/^(`{3,})[a-zA-Z]{1,}/) || [""]
@@ -83,6 +84,7 @@ const computeMdxMeta = (rawBody: string) => {
       const backtickNumber = line.length
       if (backtickNumber === flag.codeblock.backtickNumber) {
         // console.log("[CodeBlock End] matched", line)
+        statistic.codeblock++
         flag.codeblock.isStarted = false
         flag.codeblock.backtickNumber = 0
       } else {

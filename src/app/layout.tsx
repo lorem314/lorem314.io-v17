@@ -1,21 +1,23 @@
 "use client"
-// import { useState } from "react"
-// import { useRouter } from "next/navigation"
+import React from "react"
+import { usePathname } from "next/navigation"
 import { AppProgressBar } from "next-nprogress-bar"
 
 import Header from "@/components/layouts/Header"
 import Footer from "@/components/layouts/Footer"
 import Sidebar from "@/components/layouts/Sidebar"
-// import MediaQuery from "@/components/ui/MediaQuery"
 import Drawer from "@/components/ui/Drawer"
 
 import useDrawer from "@/hooks/useDrawer"
 import useClient from "@/hooks/useClient"
 
-// import { RiMenu2Fill } from "react-icons/ri"
+import GlobalContext from "@/GlobalContext"
+
+import { RiMenu2Fill } from "react-icons/ri"
+import { VscListTree } from "react-icons/vsc"
+import { AiOutlineTags } from "react-icons/ai"
 
 import "./globals.css"
-import { useEffect } from "react"
 
 export default function RootLayout({
   children,
@@ -23,9 +25,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const isLeftDrawerAlwaysCollapsed = false
-  // const isRightDrawerAlwaysCollapsed = false
+  const isRightDrawerAlwaysCollapsed = false
+
   const isClient = useClient()
-  // const router = useRouter()
+  const pathname = usePathname()
 
   const {
     isCollapsed: isLeftDrawerCollapsed,
@@ -36,13 +39,20 @@ export default function RootLayout({
     breakPoint: 1280,
   })
 
-  // useEffect(() => {
-  //   router.events.on("routeChangeStart", (url, { shallow }) => {
-  //     console.log(`routing to ${url}`, `is shallow routing: ${shallow}`)
-  //   })
-  // }, [])
+  const rightDrawerProps = getRightDrawerProps(pathname)
+  const {
+    isCollapsed: isRightDrawerCollapsed,
+    isOpen: isRightDrawerOpen,
+    handler: handleRightDrawer,
+  } = useDrawer({
+    isAlwaysCollapsed: isRightDrawerAlwaysCollapsed,
+    breakPoint: rightDrawerProps.bp,
+  })
 
   const hasLeftDrawer = isLeftDrawerAlwaysCollapsed || isLeftDrawerCollapsed
+  const hasRightDrawer =
+    (isRightDrawerAlwaysCollapsed || isRightDrawerCollapsed) &&
+    rightDrawerProps.icon !== null
 
   return (
     <html lang="ch">
@@ -61,6 +71,9 @@ export default function RootLayout({
             <Header
               hasLeftDrawer={hasLeftDrawer}
               handleLeftDrawer={handleLeftDrawer}
+              hasRightDrawer={hasRightDrawer}
+              handleRightDrawer={handleRightDrawer}
+              rightDrawerProps={rightDrawerProps}
             />
 
             {hasLeftDrawer ? (
@@ -78,7 +91,16 @@ export default function RootLayout({
             )}
 
             <main className="overflow-y-auto px-[10px] absolute top-[50px] bottom-0 right-0 left-0 xl:left-[320px] bg-gray-200">
-              {children}
+              <GlobalContext.Provider
+                value={{
+                  test: "233333",
+                  hasRightDrawer,
+                  isRightDrawerOpen,
+                  handleRightDrawer,
+                }}
+              >
+                {children}
+              </GlobalContext.Provider>
               <Footer />
             </main>
           </>
@@ -88,4 +110,25 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
+
+const getRightDrawerProps = (pathname: string) => {
+  const splitted = pathname.split("/")
+  const length = splitted.length
+
+  if (length === 2 && splitted[1] === "blogs") {
+    // /blogs
+    return { bp: 1024, icon: AiOutlineTags }
+  } else if (length === 2 && splitted[1] === "books") {
+    // /books
+    return { bp: 1024, icon: RiMenu2Fill }
+  } else if (length === 3 && splitted[1] === "blogs") {
+    // /blogs/[blog-title]
+    return { bp: 1024, icon: VscListTree }
+  } else if (length === 4 && splitted[1] === "books") {
+    // /books/[book-title]/[book-chapter]
+    return { bp: 1024, icon: VscListTree }
+  } else {
+    return { bp: 0, icon: null }
+  }
 }

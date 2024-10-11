@@ -6,15 +6,22 @@ import { RiMenu2Line } from "react-icons/ri"
 
 import Social from "./Social"
 import { geistSans } from "@/fonts/font"
+import { IconType } from "react-icons"
 
 const Header = ({
   hasLeftDrawer,
   handleLeftDrawer,
+  hasRightDrawer,
+  handleRightDrawer,
+  rightDrawerProps,
 }: {
   hasLeftDrawer: boolean | null
   handleLeftDrawer: { open: () => void; close: () => void }
+  hasRightDrawer: boolean | null
+  handleRightDrawer: { open: () => void; close: () => void }
+  rightDrawerProps: { bp: number; icon: IconType | null }
 }) => {
-  // console.log("hasLeftDrawer", hasLeftDrawer)
+  const RightDrawerIcon = rightDrawerProps.icon
   return (
     <header className="h-[50px] px-[10px] text-white bg-[#2c5c97] shadow-[0_1px_0_0_rgba(0,0,0,0.1)] flex items-center gap-[10px]">
       {/*  */}
@@ -30,8 +37,10 @@ const Header = ({
         </button>
       ) : null}
 
-      <h1 className={`text-lg ${geistSans.className} antialiased`}>
-        <Link href="/">lorem314.io</Link>
+      <h1 className={`text-lg font-bold `}>
+        <Link className="text-inherit" href="/">
+          lorem314.io
+        </Link>
       </h1>
 
       <div className="flex-grow flex justify-center text-sm">
@@ -49,7 +58,16 @@ const Header = ({
 
       <Social />
 
-      <div id="anchor-2"></div>
+      {hasRightDrawer ? (
+        <button
+          className="p-1.5 rounded bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.2)]"
+          onClick={() => {
+            handleRightDrawer.open()
+          }}
+        >
+          {RightDrawerIcon ? <RightDrawerIcon className="w-5 h-5" /> : null}
+        </button>
+      ) : null}
 
       {/*  */}
     </header>

@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 import React, { useState, useEffect, ReactNode } from "react"
 import { createPortal } from "react-dom"
 
@@ -35,8 +35,8 @@ const Portal = ({
   size,
   onClose,
   children,
-}: // title,
-{
+  title,
+}: {
   placement: Placement
   size: number
   onClose: () => void
@@ -76,30 +76,53 @@ const Portal = ({
       onClick={handleCloseDrawer}
     >
       <div
-        className="transition-transform absolute flex flex-col"
+        className="transition-transform absolute flex flex-col bg-white"
         style={{ ...positionProps, transform }}
         onClick={(event) => event.stopPropagation()}
       >
-        <header className="basis-[50px] flex-shrink-0 px-[10px] bg-[#2c5c97] flex items-center">
+        <header
+          className={`text-white basis-[50px] flex-shrink-0 px-[10px] bg-[#2c5c97] flex items-center gap-[10px] ${
+            placement === "right"
+              ? "justify-between flex-row-reverse"
+              : "justify-start flex-row"
+          }`}
+        >
           <button
-            className="p-1.5 rounded text-white bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.2)]"
+            className="p-1.5 rounded bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.2)]"
             onClick={handleCloseDrawer}
           >
             <VscChromeClose className="w-5 h-5" />
           </button>
-          {/* {title ? <h1 className="drawer-title">{title}</h1> : "lorem314.io"} */}
+          <h1 className="drawer-title text-current text-lg font-bold">
+            {title ? title : "lorem314.io"}
+          </h1>
         </header>
-        <div className="flex-grow-1 overflow-y-auto">
+        <div className="flex-grow-1 overflow-y-auto ">
           {React.cloneElement(
             children as React.ReactElement<{ onCloseDrawer: () => void }>,
-            {
-              onCloseDrawer: handleCloseDrawer,
-            }
+            { onCloseDrawer: handleCloseDrawer }
           )}
         </div>
       </div>
     </div>,
     document.body
+  )
+}
+
+export const DrawerHead = ({
+  children,
+  onCloseDrawer,
+}: {
+  children: ReactNode
+  onCloseDrawer?: () => void
+}) => {
+  return (
+    <div className="p-[10px]">
+      {React.cloneElement(
+        children as React.ReactElement<{ onCloseDrawer: () => void }>,
+        { onCloseDrawer }
+      )}
+    </div>
   )
 }
 
@@ -117,7 +140,6 @@ function getPositionProps(placement: Placement, size: number) {
 }
 
 function getTransformStartProp(placement: Placement) {
-  console.log("[getTransformStartProp] placement", placement)
   switch (placement) {
     case "top":
       return "translate(0, -100%)"

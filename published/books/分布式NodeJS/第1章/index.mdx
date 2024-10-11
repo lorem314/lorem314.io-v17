@@ -1,0 +1,149 @@
+---
+isbn: 978-1-492-07729-9
+title: 为何选用分布式
+chapter: 1
+---
+
+import Section from '@/components/elements/Section'
+import Figure from '@/components/elements/Figure'
+import { Tip, Border } from '@/components/elements/oreilly'
+
+[#hashtag](#NodeJS速览)
+
+[另一章](./第2章)
+
+NodeJS 是一个可以使 JavaScript 代码运行在服务器上的<u>自包含</u>(self-contained)<u>运行时</u>(runtime)。它提供了 JavaScript 语言引擎，和许多能与底层操作系统交互、或是通过网络与外界交互的 API。
+
+> 自包含(self-contained)：在计算机中，自包含系统是一种软件架构方法，注重于将功能分离成多个独立的系统，使其整体成为多个小软件系统的集合。
+
+> 运行时(runtime)：运行时是程序生命周期的一个阶段，程序和外部指令同时运行。其中一些外部指令称为运行时系统或运行时环境，是编程语言的组成部分。
+
+本章将先简单地、笼统地介绍一下 NodeJS，尤其是它与本书的联系。我们将着重于 JavaScript 语言的单线程，这一即是它最大优点也是它最大的缺点的特点，以及为何选用分布式来运行 NodeJS 非常重要。
+
+本章中还会有一些作为例子用于讲解的小型服务器应用，在之后的章节中我们会多次对其进行改进和升级。最原始的应用程序的代码非常简单，可能要比你以前见过的任何代码都要简单。
+
+如果你早已对 NodeJS 有过一些了解，可以直接跳转至<a href="#应用程序示例">1.4 应用程序示例</a>。
+
+JavaScript 语言正在从**单线程**语言转为**多线程**语言。例如 <a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Atomics">Atomics</a> 对象，提供了与不同**线程**(thread)通信的机制，而 <a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer">SharedArrayBuffer</a> 可被跨线程地读取和存储。在撰写本书的时间节点上，多线程 JavaScript 还未迎合大众，在社区中流行开来。如今的 JavaScript 已经是多线程，但该语言的核心以及生态，仍被认为是单线程。
+
+<Section title="JavaScript的单线程特性">
+
+和其他程序语言一样，JavaScript 中也有着**函数**这一概念。函数可以用于将相关的工作单元组合到一起，函数中也可以调用其它函数。在一个函数中，每次有其他函数被调用时，这个新被调用的函数会放到<u>调用栈</u>(call stack)的最顶层，调用栈也会因此变高一层。若是不小心执行了一个会无限次调用自己的递归函数，程序会报如下错误：RangeError: Maximun call stack size exceeded error. 意味着调用栈的层数达到了最大上限。
+
+<Tip>
+
+调用栈层数的最大上限一般由 JavaScript 引擎决定。例如，第 14 版本的 NodeJS 所使用的 JavaScript 引擎 V8 的调用栈层数的最大上限是 15,000。
+
+</Tip>
+
+然而，JavaScript 语言也不同于其他编程语言的是，它不会将自身的代码限制在一个调用栈中，相比于 PHP，整个 PHP 脚本的生命周期都只存在于一个调用栈中，随着接受到 HTTP 请求后开始增长和收缩，最后消失。其生命周期直接与服务 HTTP 请求所需的时间相关。
+
+JavaScript 通过**事件循环**(event loop)的方式来处理并行任务。本章的 <a href="#NodeJS中的事件循环">1.3 NodeJS 中的事件循环</a>一节中会更详细地介绍有关事件循环的机制，至于现在，我们可以将其抽象为一个**不断检查是否有未完成的任务要去完成的**死循环。当检查到有需要完成的任务时，它便开始去执行任务——这里之的任务通常是一个函数，并且是在一个新的调用栈中执行该函数。完成任务后，事件循环又会回到不断检查的状态，直到再次检查到有任务要完成。
+
+我们通过<a href="#代码1-1">代码 1-1</a>来具体说明一下事件循环的过程。首先执行 setTimeout 函数，将 `x()` 函数的运行放到宏队列中，之后在当前栈中执行函数 `a()` 。执行完函数 a 后，当前栈中的任务均已被执行，事件循环便开始检查是否有未完成的任务，事件循环只有在一个栈中的所有任务都执行完毕后，才会去检查其他的栈。接下来开始执行被放到宏队列中的 x 函数。
+
+
+```js id="1-1" title="多个 JavaScript 堆栈示例"
+function a() {
+  b()
+}
+function b() {
+  c()
+}
+function c() {
+  /**/
+}
+
+function x() {
+  y()
+}
+function y() {
+  z()
+}
+function z() {
+  /**/
+}
+
+setTimeout(x, 0)
+a()
+```
+
+<a href="#图片1-1">图片 1-1</a> 是上述代码示例的可视化。图中有两个独立的调用栈，并且每个调用栈的层数会随着其内部有函数被调用而增高。
+
+<Figure id="1-1" title="多个 JavaScript 堆栈的可视化" src="/books/分布式NodeJS/第1章/图片1-1_多个JavaScript堆栈的可视化.png" />
+
+`setTimeout(x, 0)` 函数本质上是在说，在 0 毫秒之后执行 x 函数。在程序运行到该行时，x 函数不会立即执行，因为当前事件循环正在处理 a 函数所在的调用栈。严格的来讲，x 函数也不会在当前堆栈完成后马上执行，因为事件循环需要一些时间（但少到可以忽略）来准备新的调用堆栈。所以，即使函数 x 被安排在 0 毫秒后运行，实际上在代码真正运行前仍需要耽误几毫秒，但随着应用程序负载的增加，这几毫秒也会相应增加。
+
+另一件需要记住的事是，执行完一个函数可能需要花费很长的时间。如果 `a()` 函数运行了 100 毫秒，那么 `x()` 函数运行的最早时间是 101 毫秒。因此，需要将函数中的时间参数视为调用函数的最早时间。一个需要长时间来执行的函数有可能会阻碍事件循环对其他堆栈的调度，因为事件循环会一直卡在该函数上，直到处理完毕才会处理下一个堆栈。
+
+<Border title="面试问题">
+
+下面这个问题我常出给来面试的人，<a href="#代码1-2">代码 1-2</a> 会输出什么结果。另外，它们大概会在第几毫秒时输出。
+
+```js id="1-2" title="JavaScript 计时问题"
+setTimeout(() => console.log("A"), 0)
+console.log("B")
+
+setTimeout(() => console.log("C"), 100)
+setTimeout(() => console.log("D"), 0)
+
+let i = 0
+while (i < 1_000_000_000) {
+  // 假设该循环大概需要 500 毫秒来完成
+  let ignore = Math.sqrt(i)
+  i++
+}
+
+console.log("E")
+```
+
+尝试着写出 A-E 的输出顺序，以及每个字母输出时，距离代码刚开始执行时过去了多少毫秒。答案和解析将在之后的表格 1-1 中公布。
+
+</Border>
+
+现在先暂时放下调用栈，来说一说本节中最有趣的部分。
+
+由于 JavaScript 应用程序都以单线程方式运行，因此不会同时处理两个调用堆栈中的任务，换句话说就是两个函数不能并行执行。这就意味着需，要寻找某种另外的方式，同时运行应用程序的多个副本，以允许应用程序<u>扩展</u>(scale)。
+
+
+> 扩展(scale)：保持程序的行为不变，增加可负载量来处理大量的用户请求。<a href="https://www.geeksforgeeks.org/overview-of-scaling-vertical-and-horizontal-scaling/" target="_blank">https://www.geeksforgeeks.org/overview-of-scaling-vertical-and-horizontal-scaling/</a>
+
+目前有很多工具可用于更方便地管理应用程序的多个副本。[3.1 Cluster 模块](./第3章#Cluster模块)一节中，将使用 NodeJS 内置的 cluster 模块将传入的 HTTP 请求发送到不同的应用程序实例副本。另一个内置模块 worker_threads 也能使多个 JavaScript 实例同时运行，child_process 模块可以用来生成并管理 NodeJS 进程。
+
+但无论是上述方法中的哪一种，每个 JavaScript 实例仍然有自己独特的全局变量，并且它们之间不能共享对象引用。
+
+由于 object 不能在上述的三种方法中被共享，因此需要寻找其他能够在被相互隔离的 JavaScript 实例之间进行通信的方法。这样的功能确实存在，称为**消息传递**(message passing)。消息传递使用经过**序列化**(serialization)的 object 来实现数据共享。由于 object 不能被共享，因此序列化是非常有必要的，更不用说在不同实例中修改同一个 object 所带来的糟糕的 debug 体验了。这些类型的问题被称为**死锁**(deadlocks)和**竞争条件**(race conditions)。
+
+<Tip>
+
+通过使用 `worker_threads` 模块，是可以实现在两个不同的 JavaScript 实例中共享变量的。可通过创建 `SharedArrayBuffer` 实例，并用 `postMessage(value)` 方法传递数据给其他进程，数据可以字节数组的方式可被多个线程同时读写。
+
+</Tip>
+
+数据的序列化和反序列化来共享变量时，在性能上可能会有不小的开销。诸如此类的开销在支持多进程的编程语言中不会被考虑到，毕竟变量可以直接被共享。
+
+这就是为何 NodeJS 应用有必要以分布式的形式运行的最大原因之一。为了能够将 JavaScript 应用扩展的足够大，需要运行足够多的拷贝实例，这样 NodeJS 进程的任何单个实例都不会完全耗尽其可用 CPU。
+
+在简单聊了一下 JavaScript 后，现在再来说一说 NodeJS 本身。
+
+下面的 <a href="#表格1-1">表格 1-1</a> 提供了之前面试问题的答案。
+
+</Section>
+<Section title="NodeJS速览">
+</Section>
+<Section title="NodeJS 中的事件循环">
+<Section title="事件循环阶段">
+</Section>
+<Section title="代码示例"> 
+</Section>
+<Section title="实用提示">
+</Section>
+</Section>
+<Section title="应用程序示例">
+<Section title="服务程序之间的关系">
+</Section>
+<Section title="生产者服务器">
+</Section>
+<Section title="消费者服务器">
+</Section>
+</Section>

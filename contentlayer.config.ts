@@ -10,12 +10,12 @@ const Blog = defineDocumentType(() => ({
   fields: {
     title: { type: "string", required: true, default: "博客标题" },
     tags: { type: "list", of: { type: "string" }, default: [] },
+    date: { type: "date", required: true, default: "2000-01-01" },
   },
   computedFields: {
     meta: {
       type: "json",
       resolve: async (doc) => {
-        // console.log("[compute mdx meta] ---", doc.title, "----")
         return computeMdxMeta(doc.body.raw)
       },
     },
@@ -28,7 +28,7 @@ const BookCover = defineDocumentType(() => ({
   filePathPattern: "books/**/index.json",
   fields: {
     title: { type: "string", required: true },
-    // subtitle: { type: "string", required: true },
+    subtitle: { type: "string", required: true },
     cover: { type: "string", required: true },
     isbn: { type: "string", required: true },
   },
@@ -43,18 +43,25 @@ const BookChapter = defineDocumentType(() => ({
     chapter: { type: "string", required: true },
     isbn: { type: "string", required: true },
   },
-  computedFields: {},
+  computedFields: {
+    meta: {
+      type: "json",
+      resolve: async (doc) => {
+        return computeMdxMeta(doc.body.raw)
+      },
+    },
+  },
 }))
 
 export default makeSource({
-  contentDirPath: "src/published",
+  contentDirPath: "published",
   documentTypes: [Blog, BookCover, BookChapter],
   mdx: {
     remarkPlugins: [
       [
         remarkCodeHike,
         {
-          components: { code: "Code" },
+          components: { code: "CodeHikePre" },
           syntaxHighlighting: { theme: "github-dark" },
         },
       ],

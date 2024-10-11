@@ -1,4 +1,3 @@
-"use client"
 import { useEffect, useState, useCallback } from "react"
 
 const useDrawer = ({ isAlwaysCollapsed = false, breakPoint = 0 }) => {

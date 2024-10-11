@@ -1,3 +1,4 @@
+import { Metadata } from "next/types"
 import React from "react"
 
 const SettingPage = () => {
@@ -9,3 +10,7 @@ const SettingPage = () => {
 }
 
 export default SettingPage
+
+export const metadata: Metadata = {
+  title: "设置 | lorem314.io-v17",
+}

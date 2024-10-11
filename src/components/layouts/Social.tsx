@@ -20,8 +20,8 @@ const Social = () => {
         return (
           <li key={index} className="">
             <a
+              className="flex items-center gap-1 opacity-75 hover:opacity-100 p-2 bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.2)] rounded md:bg-transparent md:hover:bg-transparent md:p-0 text-inherit"
               href={href}
-              className="flex items-center gap-1 opacity-75 hover:opacity-100 p-2 bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.2)] rounded md:bg-transparent md:hover:bg-transparent md:p-0"
             >
               <Icon className="w-5 h-5 md:w-4 md:h-4" />
               <span className="hidden md:inline">{title}</span>

@@ -3,25 +3,22 @@ import { MDX } from "contentlayer/core"
 import { useMDXComponent } from "next-contentlayer/hooks"
 
 import CodeHikePre from "../elements/CodeHikePre"
-import { H2, H3, H4, H5, H6 } from "../elements/headings"
+import { P } from "../elements/blocks"
+import { Code } from "../elements/inlines"
 
 const Body = ({ body }: { body: MDX }) => {
   const MDXContent = useMDXComponent(body.code)
 
   return (
-    <div className="page-content">
+    <div className="page-content px-8 py-6">
       <MDXContent
         components={{
-          h2: (props) => <H2>{props.children}</H2>,
-          h3: (props) => <H3>{props.children}</H3>,
-          h4: (props) => <H4>{props.children}</H4>,
-          h5: (props) => <H5>{props.children}</H5>,
-          h6: (props) => <H6>{props.children}</H6>,
-          Code: CodeHikePre,
-          code: (props) => (
-            <code className="text-red-500">{props.children}</code>
+          CodeHikePre,
+          code: (props) => <Code>{props.children}</Code>,
+          p: (props) => <P>{props.children}</P>,
+          blockquote: (props) => (
+            <blockquote className="text-red-400">{props.children}</blockquote>
           ),
-          p: (props) => <p className="">{props.children}</p>,
         }}
       />
     </div>

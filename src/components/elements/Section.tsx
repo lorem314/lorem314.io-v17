@@ -1,4 +1,19 @@
 import React, { isValidElement, ReactNode } from "react"
+import { RiHashtag } from "react-icons/ri"
+
+import { H2, H3, H4, H5, H6 } from "./headings"
+
+const h: {
+  [key: string]: ({
+    children,
+    id,
+    className,
+  }: {
+    children: ReactNode
+    id: string
+    className: string
+  }) => React.JSX.Element
+} = { H2, H3, H4, H5, H6 }
 
 const Section = ({
   title,
@@ -9,11 +24,19 @@ const Section = ({
   level: number
   children: ReactNode
 }) => {
-  // console.log(`${title}: ${level}`)
+  const H = h[`H${level < 6 ? level : 6}`]
+  // const hashtagLink = encodeURIComponent(title)
 
   return (
-    <section className="">
-      <div className="font-bold">level-{level}</div>
+    <section>
+      <H id={title} className="font-bold group">
+        <a
+          className="text-inherit relative before:content-['#'] before:absolute before:translate-x-[-125%] before:opacity-0 hover:before:opacity-100 group-target:before:opacity-100"
+          href={`#${title}`}
+        >
+          {title}
+        </a>
+      </H>
 
       {React.Children.toArray(children).map((child, index) => {
         if (isValidElement(child)) {
