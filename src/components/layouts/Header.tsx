@@ -5,7 +5,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6"
 import { RiMenu2Line } from "react-icons/ri"
 
 import Social from "./Social"
-import { geistSans } from "@/fonts/font"
+// import { geistSans } from "@/fonts/font"
 import { IconType } from "react-icons"
 
 const Header = ({

@@ -1,4 +1,4 @@
-import type { AnnotationHandler, RawCode } from "codehike/code"
+import type { AnnotationHandler } from "codehike/code"
 
 import { InlineAnnotation } from "codehike/code"
 

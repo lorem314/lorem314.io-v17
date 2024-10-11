@@ -1,5 +1,4 @@
-import { InlineAnnotation } from "codehike/code"
-import type { AnnotationHandler, RawCode } from "codehike/code"
+import type { RawCode } from "codehike/code"
 import { Pre, highlight } from "codehike/code"
 
 import callout from "../ch-handlers/callout"
@@ -33,7 +32,8 @@ const parseMeta = (rawMeta: string) => {
   const meta: { [key: string]: string | number | boolean } = {}
 
   for (const match of iterator) {
-    const [_, key, value] = match
+    const key = match[1]
+    const value = match[2]
     if (value === undefined) meta[key] = true
     else meta[key] = value
   }

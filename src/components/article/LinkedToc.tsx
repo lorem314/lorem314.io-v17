@@ -95,6 +95,7 @@ const Items = forwardRef(
     )
   }
 )
+Items.displayName = "LinkedToc-Items"
 
 const Item = forwardRef(
   ({ item, level }: { item: Item; level: number }, ref) => {
@@ -145,3 +146,4 @@ const Item = forwardRef(
     }
   }
 )
+Item.displayName = "LinkedToc-Item"

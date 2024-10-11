@@ -3,7 +3,7 @@ import Link from "next/link"
 import { type Blog } from "contentlayer/generated"
 
 import Tags from "./Tags"
-import { formateDate, getTimeAgo } from "@/utils/date"
+import { getTimeAgo } from "@/utils/date"
 
 const BlogItem = ({ blog }: { blog: Blog }) => {
   return (

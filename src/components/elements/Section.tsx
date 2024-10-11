@@ -1,5 +1,4 @@
 import React, { isValidElement, ReactNode } from "react"
-import { RiHashtag } from "react-icons/ri"
 
 import { H2, H3, H4, H5, H6 } from "./headings"
 

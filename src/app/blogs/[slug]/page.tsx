@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { allBlogs } from "contentlayer/generated"
 import { useMDXComponent } from "next-contentlayer/hooks"
@@ -14,7 +13,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       post._raw.flattenedPath === `blogs/${decodeURIComponent(params.slug)}`
   )
 
-  if (!post) return notFound()
+  if (!post) notFound()
 
   const MDXContent = useMDXComponent(post.body.code)
 

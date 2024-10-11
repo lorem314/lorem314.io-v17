@@ -2,7 +2,7 @@
 const isStaticImport = (line: string) => line.startsWith("import")
 
 // <Image width={64} height="64px" />
-const isSelfClosingTag = (line: string) => {}
+// const isSelfClosingTag = (line: string) => {}
 
 // <Component>
 const isOpeningTag = (line: string, name?: string) =>

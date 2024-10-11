@@ -39,7 +39,3 @@ export const H6 = ({ children, id, className }: HeadingProps) => (
     {children}
   </h6>
 )
-
-const parseId = (text: string) => {
-  return ""
-}

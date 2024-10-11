@@ -1,9 +1,7 @@
 "use client"
 import React, { ReactElement, useContext } from "react"
-import { MDX } from "contentlayer/core"
 
 import Actions from "@/components/article/Actions"
-import Body from "@/components/article/Body"
 import LinkedToc from "./LinkedToc"
 
 import Drawer, { DrawerHead } from "@/components/ui/Drawer"

@@ -1,8 +1,7 @@
 import React from "react"
-import { type BookChapter } from "contentlayer/generated"
 
-const BookChapterItem = ({ chapter }: { chapter: BookChapter }) => {
-  return <div></div>
+const BookChapterItem = () => {
+  return <div>BookChapterItem</div>
 }
 
 export default BookChapterItem

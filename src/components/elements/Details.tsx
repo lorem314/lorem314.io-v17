@@ -32,7 +32,11 @@ const Details = forwardRef((props: DetailsProps, ref) => {
         className="flex items-start select-none"
         onClick={(event) => {
           event.preventDefault()
-          isOpen ? close() : open()
+          if (isOpen) {
+            close()
+          } else {
+            open()
+          }
         }}
       >
         <button onClick={isOpen ? close : open}>
@@ -56,5 +60,6 @@ const Details = forwardRef((props: DetailsProps, ref) => {
     </details>
   )
 })
+Details.displayName = "Details"
 
 export default Details

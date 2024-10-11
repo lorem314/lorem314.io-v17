@@ -1,6 +1,4 @@
-import { useState } from "react"
-
-const useLocalStorage = (key: string, initialValue: any) => {
+const useLocalStorage = () => {
   return []
 }
 

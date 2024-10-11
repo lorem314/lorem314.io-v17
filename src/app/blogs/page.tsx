@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useContext } from "react"
+import React, { useContext } from "react"
 import { allBlogs } from "contentlayer/generated"
 
 import Search from "@/components/blogs/Search"
@@ -11,7 +11,6 @@ import Drawer from "@/components/ui/Drawer"
 import GlobalContext from "@/GlobalContext"
 
 const BlogsPage = () => {
-  const [blogs, setBlogs] = useState(allBlogs)
   const { hasRightDrawer, isRightDrawerOpen, handleRightDrawer } =
     useContext(GlobalContext)
 
@@ -30,7 +29,7 @@ const BlogsPage = () => {
         }`}
       >
         <h3 className="content-title">博客(999)</h3>
-        <BlogList blogs={blogs} />
+        <BlogList blogs={allBlogs} />
       </div>
 
       {hasRightDrawer ? (
