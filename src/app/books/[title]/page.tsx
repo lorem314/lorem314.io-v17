@@ -6,7 +6,10 @@ import BookChapterList from "@/components/books/BookChapterList"
 
 export default function Page({ params }: { params: { title: string } }) {
   const bookCover = allBookCovers.find((bookCover) => {
-    return bookCover._raw.flattenedPath === `books/${decodeURI(params.title)}`
+    return (
+      bookCover._raw.flattenedPath ===
+      `books/${decodeURIComponent(params.title)}`
+    )
   })
   if (!bookCover) return notFound()
 

@@ -21,8 +21,10 @@ import "./globals.css"
 
 export default function RootLayout({
   children,
+  sidebar,
 }: Readonly<{
   children: React.ReactNode
+  sidebar: React.ReactNode
 }>) {
   const isLeftDrawerAlwaysCollapsed = false
   const isRightDrawerAlwaysCollapsed = false
@@ -82,11 +84,11 @@ export default function RootLayout({
                 size={320}
                 onClose={handleLeftDrawer.close}
               >
-                <Sidebar />
+                <Sidebar>{sidebar}</Sidebar>
               </Drawer>
             ) : (
               <aside className="absolute top-[50px] bottom-0 left-0 w-[320px]">
-                <Sidebar />
+                <Sidebar>{sidebar}</Sidebar>
               </aside>
             )}
 

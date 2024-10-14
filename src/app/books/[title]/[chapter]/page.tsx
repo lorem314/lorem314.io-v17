@@ -7,17 +7,14 @@ import Article from "@/components/article/Article"
 import Link from "next/link"
 
 export default function Page({
-  params,
+  params: { chapter, title },
 }: {
   params: { chapter: string; title: string }
 }) {
-  const title = decodeURIComponent(params.title)
-  const chapter = decodeURI(params.chapter)
-
   const bookChapter = allBookChapters.find(
     (bookChapter) =>
       bookChapter._raw.flattenedPath ===
-      `books/${decodeURI(title)}/${decodeURI(chapter)}`
+      `books/${decodeURIComponent(title)}/${decodeURI(chapter)}`
   )
 
   if (!bookChapter) notFound()
@@ -64,19 +61,20 @@ export default function Page({
 }
 
 export async function generateMetadata({
-  params,
+  params: { chapter, title },
 }: {
   params: { chapter: string; title: string }
 }) {
-  const title = decodeURIComponent(params.title)
-  const chapter = decodeURI(params.chapter)
-
   const bookChapter = allBookChapters.find(
     (bookChapter) =>
       bookChapter._raw.flattenedPath ===
-      `books/${decodeURI(title)}/${decodeURI(chapter)}`
+      `books/${decodeURIComponent(title)}/${decodeURI(chapter)}`
   )
-  if (!bookChapter) return { title: "404" }
+  if (!bookChapter) {
+    return {
+      title: "404 | lorem314.io-v17",
+    }
+  }
 
   return {
     title: `第 ${bookChapter.chapter} 章 ${bookChapter.title} | ${title} | 书籍 | lorem314.io-v17`,

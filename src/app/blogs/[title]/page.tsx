@@ -7,10 +7,13 @@ import Tags from "@/components/blogs/Tags"
 import Article from "@/components/article/Article"
 import { H1 } from "@/components/elements/headings"
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default function Page({
+  params: { title },
+}: {
+  params: { title: string }
+}) {
   const post = allBlogs.find(
-    (post) =>
-      post._raw.flattenedPath === `blogs/${decodeURIComponent(params.slug)}`
+    (post) => post._raw.flattenedPath === `blogs/${decodeURIComponent(title)}`
   )
 
   if (!post) notFound()
@@ -45,12 +48,12 @@ export default function Page({ params }: { params: { slug: string } }) {
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params: { title },
 }: {
-  params: { slug: string }
+  params: { title: string }
 }) {
   const post = allBlogs.find(
-    (post) => post._raw.flattenedPath === `blogs/${decodeURIComponent(slug)}`
+    (post) => post._raw.flattenedPath === `blogs/${decodeURIComponent(title)}`
   )
   if (!post)
     return {

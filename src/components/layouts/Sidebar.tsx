@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { ReactNode } from "react"
 import Link from "next/link"
 
 import { FaHome } from "react-icons/fa"
@@ -14,7 +14,13 @@ const routes = [
   { Icon: RiSettings3Fill, title: "设置", href: "/setting" },
 ]
 
-const Sidebar = ({ onCloseDrawer }: { onCloseDrawer?: () => void }) => {
+const Sidebar = ({
+  onCloseDrawer,
+  children,
+}: {
+  onCloseDrawer?: () => void
+  children?: ReactNode
+}) => {
   return (
     <nav className="w-full h-full flex flex-row bg-[#f7f7f7] max-w-[320px]">
       <ul className="basis-[50px] shrink-0 pt-[10px] bg-[#e5e5e5] flex flex-col items-center gap-[10px]">
@@ -40,6 +46,7 @@ const Sidebar = ({ onCloseDrawer }: { onCloseDrawer?: () => void }) => {
       </ul>
 
       <section className="overflow-y-auto mt-[10px] mx-[10px] rounded p-[10px] bg-[#fdfdfd] shadow">
+        {children}
         <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
         <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
         <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>

@@ -29,6 +29,11 @@ body {
 a {
   color: #d23669;
 }
+a:hover {
+  text-underline-offset: 0.25rem;
+  text-decoration: underline;
+}
+
 svg {
   width: var(--svg-icon-size, 16px);
   height: var(--svg-icon-size, 16px);
