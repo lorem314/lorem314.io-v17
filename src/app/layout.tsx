@@ -63,7 +63,8 @@ export default function RootLayout({
 
         <AppProgressBar
           height="4px"
-          color="#97672C"
+          // color="#97672C"
+          color="#ff0000"
           options={{ showSpinner: false }}
           shallowRouting
         />

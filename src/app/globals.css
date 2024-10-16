@@ -48,6 +48,7 @@ svg {
   }
   .content-title {
     @apply block mb-[8px] border-b pb-[4px] select-none font-bold font-mono;
+    color: #344f71;
   }
 }
 
