@@ -28,14 +28,16 @@ const Article = ({
 
   return (
     <div className="max-w-[72rem] mx-auto my-8 grid grid-cols-[2.5rem_minmax(0,_auto)_minmax(0,20rem)] gap-[10px]">
-      <aside className="">
+      <aside>
         <Actions />
       </aside>
 
       <article className="col-start-2 col-end-4 lg:col-end-3">
         {header ? header : null}
 
-        <div className="bg-white px-8 py-4">{renderedBody}</div>
+        <div className="text-LightContent-1 dark:text-DarkContent-1 bg-LightPageContentBg dark:bg-DarkPageContentBg px-8 py-4">
+          {renderedBody}
+        </div>
 
         {footer ? footer : null}
       </article>
@@ -53,8 +55,8 @@ const Article = ({
           </DrawerHead>
         </Drawer>
       ) : (
-        <div className="">
-          <LinkedToc className="page-content sticky top-[10px]" toc={toc} />
+        <div>
+          <LinkedToc className="PageContent sticky top-[10px]" toc={toc} />
         </div>
       )}
     </div>

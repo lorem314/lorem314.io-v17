@@ -22,15 +22,17 @@ const Sidebar = ({
   children?: ReactNode
 }) => {
   return (
-    <nav className="w-full h-full flex flex-row bg-[#f7f7f7] max-w-[320px]">
-      <ul className="basis-[50px] shrink-0 pt-[10px] bg-[#e5e5e5] flex flex-col items-center gap-[10px]">
+    <nav className="Bg-1 w-full h-full flex flex-row max-w-[320px]">
+      {/*  */}
+
+      <ul className="Bg-0 basis-[50px] shrink-0 pt-[10px] flex flex-col items-center gap-[10px]">
         {routes.map((route, index) => {
           const { Icon, title, href } = route
           return (
             <li key={index} className="flex justify-center items-center">
               <Link
                 href={href}
-                className="p-2 rounded-md bg-slate-300"
+                className="p-2 rounded-md text-[#505050] dark:text-[#a7a7a7] bg-[rgba(0,0,0,0.1)] dark:bg-[rgba(199,199,199,0.08)] hover:bg-[rgba(0,0,0,0.2)] dark:hover:bg-[rgba(199,199,199,0.15)] active:text-[#f7f7f7] dark:active:text-[#0e0e0e] active:bg-[#585858] dark:active:bg-[#7d7d7d]"
                 title={title}
                 onClick={() => {
                   if (onCloseDrawer) {
@@ -38,31 +40,20 @@ const Sidebar = ({
                   }
                 }}
               >
-                <Icon className="w-[18px] h-[18px] text-slate-800" />
+                <Icon className="w-[18px] h-[18px]" />
               </Link>
             </li>
           )
         })}
       </ul>
 
-      <section className="overflow-y-auto mt-[10px] mx-[10px] rounded p-[10px] bg-[#fdfdfd] shadow">
+      <div className="PageContent w-full basis-auto overflow-y-auto mt-[10px] mx-[10px] p-[10px]">
         {children}
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-        <p className="my-2">Lorem ipsum dolor sit amet consectetur.</p>
-      </section>
+      </div>
+
+      {/*  */}
     </nav>
   )
 }
 
-export default Sidebar
+export default React.memo(Sidebar)

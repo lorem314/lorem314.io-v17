@@ -26,11 +26,11 @@ export default function Page({
       components={{
         CodeHikePre,
         blockquote: (props) => (
-          <blockquote className="my-4 border-l-4 border-neutral-400 px-4 py-2 bg-slate-200">
+          <blockquote className="my-4 border-l-4 border-neutral-400 px-4 py-2 bg-slate-200 dark:bg-slate-700">
             {props.children}
           </blockquote>
         ),
-        a: (props) => <Link href={props.href || ""}>{props.children}</Link>,
+        a: (props) => <Link href={props.href || "/"}>{props.children}</Link>,
         p: (props) => <p className="my-4">{props.children}</p>,
       }}
     />
@@ -39,7 +39,7 @@ export default function Page({
   return (
     <Article
       header={
-        <header className="page-content mb-[10px]">
+        <header className="PageContent mb-[10px]">
           <div className="text-xl font-bold mb-1 text-right">
             第 {bookChapter.chapter} 章
           </div>
@@ -52,7 +52,7 @@ export default function Page({
       renderedBody={renderedMDX}
       toc={bookChapter.meta.toc}
       footer={
-        <footer className="page-content mt-[10px]">
+        <footer className="PageContent mt-[10px]">
           <div>relative articles</div>
         </footer>
       }
@@ -61,14 +61,15 @@ export default function Page({
 }
 
 export async function generateMetadata({
-  params: { chapter, title },
+  params,
 }: {
   params: { chapter: string; title: string }
 }) {
+  const title = decodeURIComponent(params.title)
+  const chapter = decodeURI(params.chapter)
   const bookChapter = allBookChapters.find(
     (bookChapter) =>
-      bookChapter._raw.flattenedPath ===
-      `books/${decodeURIComponent(title)}/${decodeURI(chapter)}`
+      bookChapter._raw.flattenedPath === `books/${title}/${chapter}`
   )
   if (!bookChapter) {
     return {
@@ -77,6 +78,6 @@ export async function generateMetadata({
   }
 
   return {
-    title: `第 ${bookChapter.chapter} 章 ${bookChapter.title} | ${title} | 书籍 | lorem314.io-v17`,
+    title: `第 ${bookChapter.chapter} 章 - ${bookChapter.title} | ${title} | 书籍 | lorem314.io-v17`,
   }
 }

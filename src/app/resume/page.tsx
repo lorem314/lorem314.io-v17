@@ -29,7 +29,7 @@ const Page = () => {
       </div>
 
       <section className="my-2">
-        <h3 className="content-title">个人简介</h3>
+        <h3 className="ContentTitle">个人简介</h3>
         <p className="my-1">
           毕业后本考虑去日本留学，花了一段时间学习日语、巩固英语，备考等级证书，并在
           Coursera 上完成了
@@ -64,9 +64,9 @@ const Page = () => {
       </section>
 
       <section className="my-4">
-        <h3 className="content-title">教育背景</h3>
+        <h3 className="ContentTitle">教育背景</h3>
         <div className="flex justify-between">
-          <div>北京工业大学（985全日制本科）</div>
+          <div>北京工业大学（211-四年制-本科）</div>
           <div>计算机科学与技术</div>
           <div>2014年 - 2018年</div>
         </div>
@@ -77,7 +77,7 @@ const Page = () => {
       </section>
 
       <section className="my-4">
-        <h3 className="content-title">个人项目</h3>
+        <h3 className="ContentTitle">个人项目</h3>
         <div className="flex justify-between font-bold">
           <div>lorem314.io</div>
           <div>个人博客网站</div>
@@ -486,7 +486,7 @@ const Page = () => {
       </section>
 
       <section className="my-4">
-        <h3 className="content-title">学习资源</h3>
+        <h3 className="ContentTitle">学习资源</h3>
         <div>
           <small>该部分旨在通过我所浏览过的资源来更好地了解我个人</small>
         </div>
@@ -596,6 +596,18 @@ const studySites = [
     href: "https://jser.dev/series/react-source-code-walkthrough",
     description:
       "React 源码解析的博客，并且有对应的视频解释，目前比较关注的资源之一。",
+  },
+  {
+    title: "BFE.dev",
+    href: "https://bigfrontend.dev/react-quiz",
+    description:
+      "大前端 (BigFrontEnd) 测试题。包括了 JavaScript、React 和 TypeScript 等前端相关知识的测试题，适合面试出题。",
+  },
+  {
+    title: "TypeHero",
+    href: "https://typehero.dev",
+    description:
+      "与 TypeScript 开发人员社区建立联系、协作和一同成长。通过交互式编码来挑战、讨论和知识共享来提升 TS 技能。",
   },
   {
     title: "Web Dev Simplified",

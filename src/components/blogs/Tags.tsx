@@ -7,7 +7,7 @@ const Tags = ({ tags }: { tags: string[] | undefined }) => {
         return (
           <li
             key={index}
-            className="border border-gray-300 px-2 py-1 rounded text-sm"
+            className="border border-gray-300 dark:border-gray-600 px-2 py-1 rounded text-sm"
           >
             {tag}
           </li>

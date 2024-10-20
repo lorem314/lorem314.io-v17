@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { AppProgressBar } from "next-nprogress-bar"
 
@@ -10,6 +10,7 @@ import Drawer from "@/components/ui/Drawer"
 
 import useDrawer from "@/hooks/useDrawer"
 import useClient from "@/hooks/useClient"
+import useLocalStorage from "@/hooks/useLocalStorage"
 
 import GlobalContext from "@/GlobalContext"
 
@@ -26,8 +27,17 @@ export default function RootLayout({
   children: React.ReactNode
   sidebar: React.ReactNode
 }>) {
-  const isLeftDrawerAlwaysCollapsed = false
-  const isRightDrawerAlwaysCollapsed = false
+  // const isLeftDrawerAlwaysCollapsed = false
+
+  const [isLeftDrawerAlwaysCollapsed, setIsLeftDrawerAlwaysCollapsed] =
+    useLocalStorage("is-left-drawer-always-collapsed", false)
+  const [isRightDrawerAlwaysCollapsed, setIsRightDrawerAlwaysCollapsed] =
+    useLocalStorage("is-right-drawer-always-collapsed", false)
+
+  const [preferredTheme, setPreferredTheme] = useLocalStorage(
+    "preferred-theme",
+    "system"
+  )
 
   const isClient = useClient()
   const pathname = usePathname()
@@ -55,6 +65,42 @@ export default function RootLayout({
   const hasRightDrawer =
     (isRightDrawerAlwaysCollapsed || isRightDrawerCollapsed) &&
     rightDrawerProps.icon !== null
+
+  useEffect(() => {
+    const darkQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
+    const handleThemeChange = ({ matches }: { matches: boolean }) => {
+      if (matches) {
+        // set to dark
+        // document.documentElement.setAttribute("data-theme", "dark")
+        document.documentElement.classList.remove("light")
+        document.documentElement.classList.add("dark")
+      } else {
+        // set to light
+        // document.documentElement.setAttribute("data-theme", "light")
+        document.documentElement.classList.remove("dark")
+        document.documentElement.classList.add("light")
+      }
+    }
+
+    if (preferredTheme === "system") {
+      darkQuery.addEventListener("change", handleThemeChange)
+      const dataTheme = darkQuery.matches ? "dark" : "light"
+      // document.documentElement.setAttribute("data-theme", dataTheme)
+      document.documentElement.classList.remove("light")
+      document.documentElement.classList.remove("dark")
+      document.documentElement.classList.add(dataTheme)
+    } else {
+      // document.documentElement.setAttribute("data-theme", preferredTheme)
+      document.documentElement.classList.remove("light")
+      document.documentElement.classList.remove("dark")
+      document.documentElement.classList.add(preferredTheme)
+    }
+
+    return () => {
+      darkQuery.removeEventListener("change", handleThemeChange)
+    }
+  }, [preferredTheme])
 
   return (
     <html lang="ch">
@@ -93,13 +139,23 @@ export default function RootLayout({
               </aside>
             )}
 
-            <main className="overflow-y-auto px-[10px] absolute top-[50px] bottom-0 right-0 left-0 xl:left-[320px] bg-gray-200">
+            <main
+              className={`Bg-0 overflow-y-auto px-[10px] absolute top-[50px] bottom-0 right-0 ${
+                hasLeftDrawer ? "left-0" : "left-[320px]"
+              }`}
+            >
               <GlobalContext.Provider
                 value={{
                   test: "233333",
                   hasRightDrawer,
                   isRightDrawerOpen,
                   handleRightDrawer,
+                  preferredTheme,
+                  setPreferredTheme,
+                  isLeftDrawerAlwaysCollapsed,
+                  setIsLeftDrawerAlwaysCollapsed,
+                  isRightDrawerAlwaysCollapsed,
+                  setIsRightDrawerAlwaysCollapsed,
                 }}
               >
                 {children}

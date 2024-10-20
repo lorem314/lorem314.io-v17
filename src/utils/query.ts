@@ -1,19 +1,25 @@
-// import {
-//   allBlogs,
-//   allBookCovers,
-//   allBookChapters,
-//   type Blog,
-//   type BookCover,
-//   type BookChapter,
-// } from "contentlayer/generated"
+import {
+  // allBlogs,
+  // allBookCovers,
+  allBookChapters,
+  // type Blog,
+  // type BookCover,
+  // type BookChapter,
+} from "contentlayer/generated"
 
-// const findBlogByTitle = (title: string) =>
-//   allBlogs.find((blog) => blog.title === title)
+export const getBookChaptersByIsbn = (isbn: string) => {
+  return allBookChapters.filter((bookChapter) => bookChapter.isbn === isbn)
+}
 
-// const findBookCoverByTitle = (title: string) =>
-//   allBookCovers.find((bookCover) => bookCover.title === title)
+export const getBookCoverTitleByIsbn = (isbn: string) => {
+  const result = allBookChapters.filter(
+    (bookChapter) => bookChapter.isbn === isbn
+  )
+  if (result.length === 1) {
+    return result[0].title
+  } else {
+    return null
+  }
+}
 
-// const findBookChapterByBookCoverTitleAndChapter = (
-//   title: string,
-//   chapter: string
-// ) => allBookChapters.find((bookChapter) => {})
+// export const getBookChaptersByBookCoverTitle = (title: string) => {}

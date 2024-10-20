@@ -5,8 +5,8 @@ import BookCoverList from "@/components/books/BookCoverList"
 
 const BooksPage = () => {
   return (
-    <section className="my-8 mx-auto p-2 rounded shadow bg-white max-w-[48rem]">
-      <h2 className="content-title">书籍({allBookCovers.length})</h2>
+    <section className="PageContent mx-auto my-8 max-w-[48rem]">
+      <h2 className="ContentTitle">书籍({allBookCovers.length})</h2>
       <BookCoverList bookCovers={allBookCovers} />
     </section>
   )

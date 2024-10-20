@@ -6,16 +6,26 @@ import { TbBrandVercel } from "react-icons/tb"
 
 const Footer = () => {
   return (
-    <footer className="text-gray-600 text-center mx-[-10px] py-4 bg-white">
+    <footer className="PageContent rounded-none text-center mx-[-10px] py-4">
       <div>lorem314.io-v17</div>
       <div>
         该网站使用
-        <a href="" className="mx-1 text-black">
+        <a
+          href="https://nextjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mx-1 "
+        >
           <RiNextjsLine className="inline w-[18px] h-[18px] mx-1" />
           <span>NextJS</span>
         </a>
-        制作<span className="font-bold text-black"> | </span>在
-        <a href="" className="mx-1 text-black">
+        制作 在
+        <a
+          href="https://vercel.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mx-1 "
+        >
           <TbBrandVercel className="inline w-[18px] h-[18px] mx-1" />
           <span>Vercel</span>
         </a>
@@ -23,12 +33,12 @@ const Footer = () => {
       </div>
       <div>
         如发现错误或有改进建议 欢迎
-        <a href="" className="mx-1 text-slate-600">
+        <a href="/" target="_blank" rel="noopener noreferrer" className="mx-1 ">
           <FaGithub className="inline w-[18px] h-[18px] mx-1" />
           <span>提出</span>
         </a>
         或
-        <a href="" className="mx-1 text-pink-700">
+        <a href="/" target="_blank" rel="noopener noreferrer" className="mx-1 ">
           <FaBilibili className="inline w-[18px] h-[18px] mx-1" />
           私信
         </a>
@@ -37,4 +47,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default React.memo(Footer)

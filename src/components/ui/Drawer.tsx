@@ -81,7 +81,7 @@ const Portal = ({
         onClick={(event) => event.stopPropagation()}
       >
         <header
-          className={`text-white basis-[50px] flex-shrink-0 px-[10px] bg-[#2c5c97] flex items-center gap-[10px] ${
+          className={`text-white bg-LightPrimary dark:bg-DarkPrimary basis-[50px] flex-shrink-0 px-[10px] flex items-center gap-[10px] ${
             placement === "right"
               ? "justify-between flex-row-reverse"
               : "justify-start flex-row"
@@ -97,7 +97,7 @@ const Portal = ({
             {title ? title : "lorem314.io"}
           </h1>
         </header>
-        <div className="flex-grow-1 overflow-y-auto ">
+        <div className="flex-grow overflow-y-auto text-LightContent-1 dark:text-DarkContent-1 bg-LightPageContentBg dark:bg-DarkPageContentBg">
           {React.cloneElement(
             children as React.ReactElement<{ onCloseDrawer: () => void }>,
             { onCloseDrawer: handleCloseDrawer }

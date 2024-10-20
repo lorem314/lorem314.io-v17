@@ -1,7 +1,6 @@
 import React from "react"
 import Link from "next/link"
 
-import { FaMagnifyingGlass } from "react-icons/fa6"
 import { RiMenu2Line } from "react-icons/ri"
 
 import Social from "./Social"
@@ -23,7 +22,7 @@ const Header = ({
 }) => {
   const RightDrawerIcon = rightDrawerProps.icon
   return (
-    <header className="h-[50px] px-[10px] text-white bg-[#2c5c97] shadow-[0_1px_0_0_rgba(0,0,0,0.1)] flex items-center gap-[10px]">
+    <header className="h-[50px] px-[10px] text-white bg-LightPrimary dark:bg-DarkPrimary shadow-[0_1px_0_0_rgba(0,0,0,0.1)] flex items-center gap-[10px]">
       {/*  */}
 
       {hasLeftDrawer ? (
@@ -44,7 +43,7 @@ const Header = ({
       </h1>
 
       <div className="flex-grow flex justify-center text-sm">
-        <button className="flex-grow-0 flex-shrink basis-[32rem] ring-1 ring-white px-2 py-1 rounded flex items-center gap-2">
+        {/* <button className="flex-grow-0 flex-shrink basis-[32rem] ring-1 ring-white px-2 py-1 rounded flex items-center gap-2">
           <FaMagnifyingGlass />
           <span>
             <span>搜索</span>
@@ -53,7 +52,7 @@ const Header = ({
               <kbd>K</kbd>
             </span>
           </span>
-        </button>
+        </button> */}
       </div>
 
       <Social />
@@ -74,4 +73,4 @@ const Header = ({
   )
 }
 
-export default Header
+export default React.memo(Header)

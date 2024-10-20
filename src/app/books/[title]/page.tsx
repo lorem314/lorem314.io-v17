@@ -18,10 +18,10 @@ export default function Page({ params }: { params: { title: string } }) {
   )
 
   return (
-    <section className="page-content mx-auto my-[2rem] max-w-[24rem]">
-      <h2 className="content-title">{bookCover.title}</h2>
+    <section className="PageContent mx-auto my-[2rem] max-w-[22rem]">
+      <h2 className="ContentTitle">{bookCover.title}</h2>
       <article>
-        <header className="mb-2 ">
+        <header className="my-4">
           <Image
             className="mx-auto"
             src={bookCover.cover}
@@ -30,9 +30,9 @@ export default function Page({ params }: { params: { title: string } }) {
             height={328}
           />
         </header>
-        <h3 className="px-2 font-bold text-xl">{bookCover.title}</h3>
-        <h4 className="px-2 text-base">{bookCover.subtitle}</h4>
-        <footer className="mt-2 px-4">
+        <h3 className="px-4 font-bold text-xl">{bookCover.title}</h3>
+        <h4 className="px-4">{bookCover.subtitle}</h4>
+        <footer className="my-2 px-4">
           <BookChapterList bookCover={bookCover} chapters={chapters} />
         </footer>
       </article>

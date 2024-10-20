@@ -42,6 +42,7 @@ const BookChapter = defineDocumentType(() => ({
     title: { type: "string", required: true },
     chapter: { type: "string", required: true },
     isbn: { type: "string", required: true },
+    date: { type: "date", required: true, default: "2000-01-01" },
   },
   computedFields: {
     meta: {

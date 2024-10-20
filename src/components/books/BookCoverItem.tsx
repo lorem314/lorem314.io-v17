@@ -12,7 +12,7 @@ const BookCoverItem = ({
 }) => {
   return (
     <article>
-      <header className="mb-2">
+      <header className="my-4">
         <Image
           src={bookCover.cover}
           alt={`${bookCover}的封面`}
@@ -20,11 +20,11 @@ const BookCoverItem = ({
           height={328}
         />
       </header>
-      <h3 className="font-bold text-xl">
+      <h3 className="px-2 font-bold text-xl">
         <Link href={`/${bookCover._raw.sourceFileDir}`}>{bookCover.title}</Link>
       </h3>
-      <h4 className="text-base">{bookCover.subtitle}</h4>
-      <footer className="mt-2">
+      <h4 className="px-2">{bookCover.subtitle}</h4>
+      <footer className="my-2 px-4">
         <ul>
           {chapters.map((chapter) => {
             return (

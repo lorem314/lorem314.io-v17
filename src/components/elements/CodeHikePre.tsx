@@ -10,9 +10,9 @@ async function CodeHikePre({ codeblock }: { codeblock: RawCode }) {
   const meta = parseMeta(highlighted.meta)
 
   return (
-    <div className="my-4 border border-[rgb(209, 213, 219)] rounded">
+    <div className="my-4 border border-[rgb(209, 213, 219)] rounded ">
       {meta.title ? (
-        <div className="border-b border-[rgb(209, 213, 219)] px-3 py-2 text-sm bg-[#f8fafc]">
+        <div className="border-b border-[rgb(209, 213, 219)] px-3 py-2 text-sm text-black bg-[#f8fafc]">
           {meta.title}
         </div>
       ) : null}
