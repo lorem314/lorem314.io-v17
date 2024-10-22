@@ -39,7 +39,10 @@ const Details = forwardRef((props: DetailsProps, ref) => {
           }
         }}
       >
-        <button onClick={isOpen ? close : open}>
+        <button
+          className="opacity-50 hover:opacity-100"
+          onClick={isOpen ? close : open}
+        >
           {isOpen ? (
             <BiChevronDown className="w-6 h-6" />
           ) : (

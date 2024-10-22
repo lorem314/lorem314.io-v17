@@ -50,12 +50,13 @@ export default function Page({
         </header>
       }
       renderedBody={renderedMDX}
+      title={bookChapter.title}
       toc={bookChapter.meta.toc}
-      footer={
-        <footer className="PageContent mt-[10px]">
-          <div>relative articles</div>
-        </footer>
-      }
+      // footer={
+      //   <footer className="PageContent mt-[10px]">
+      //     <div>relative articles</div>
+      //   </footer>
+      // }
     />
   )
 }

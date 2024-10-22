@@ -16,11 +16,13 @@ const Article = ({
   header,
   renderedBody,
   footer,
+  title,
   toc,
 }: {
   header?: ReactElement
   renderedBody: JSX.Element
   footer?: ReactElement
+  title: string
   toc: { items: Item[] }
 }) => {
   const { hasRightDrawer, isRightDrawerOpen, handleRightDrawer } =
@@ -51,12 +53,16 @@ const Article = ({
           title="目录"
         >
           <DrawerHead>
-            <LinkedToc className="" toc={toc} />
+            <LinkedToc className="" title={title} toc={toc} />
           </DrawerHead>
         </Drawer>
       ) : (
         <div>
-          <LinkedToc className="PageContent sticky top-[10px]" toc={toc} />
+          <LinkedToc
+            className="PageContent sticky top-[10px]"
+            title={title}
+            toc={toc}
+          />
         </div>
       )}
     </div>

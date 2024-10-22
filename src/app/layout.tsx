@@ -140,6 +140,7 @@ export default function RootLayout({
             )}
 
             <main
+              id="page-container"
               className={`Bg-0 overflow-y-auto px-[10px] absolute top-[50px] bottom-0 right-0 ${
                 hasLeftDrawer ? "left-0" : "left-[320px]"
               }`}
@@ -158,7 +159,9 @@ export default function RootLayout({
                   setIsRightDrawerAlwaysCollapsed,
                 }}
               >
+                {/* <div id="page-container"> */}
                 {children}
+                {/* </div> */}
               </GlobalContext.Provider>
               <Footer />
             </main>

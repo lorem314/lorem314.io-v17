@@ -18,9 +18,11 @@ type Item = {
 
 const LinkedToc = ({
   className,
+  title,
   toc,
 }: {
   className: string
+  title: string
   toc: { items: Item[] }
 }) => {
   const refDetails = useRef<{ open: () => void; close: () => void }>(null)
@@ -41,7 +43,7 @@ const LinkedToc = ({
     <div id="linked-toc" className={`${className}`}>
       <Details ref={refDetails} isOpen={true}>
         <div className="details-head group">
-          <h1 className="font-bold">目录</h1>
+          <h1 className="font-bold">{title}</h1>
           <div className="flex-grow" />
           <button
             className="opacity-0 group-hover:opacity-50 group-hover:hover:opacity-100 w-6 h-6 flex justify-center items-center"
@@ -115,8 +117,10 @@ const Item = forwardRef(
 
     useImperativeHandle(ref, () => ({ closeAll, openAll }), [])
 
+    const hashtagLink = encodeURIComponent(item.title)
+
     if (item.items?.length === 0) {
-      return <a href="">{item.title}</a>
+      return <a href={`#${hashtagLink}`}>{item.title}</a>
     } else {
       return (
         <Details ref={refDetails} isOpen={true}>
@@ -125,7 +129,12 @@ const Item = forwardRef(
               item.items?.length === 0 ? "no-items-item" : ""
             }`}
           >
-            <a href="">{item.title}</a>
+            <a
+              href={`#${hashtagLink}`}
+              onClick={(event) => event.stopPropagation()}
+            >
+              {item.title}
+            </a>
             <div className="flex-grow" />
             <button
               className="opacity-0 group-hover:opacity-50 group-hover:hover:opacity-100 w-6 h-6 flex justify-center items-center"

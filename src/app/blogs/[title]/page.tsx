@@ -6,6 +6,7 @@ import CodeHikePre from "@/components/elements/CodeHikePre"
 import Tags from "@/components/blogs/Tags"
 import Article from "@/components/article/Article"
 import { H1 } from "@/components/elements/headings"
+import { formateDate } from "@/utils/date"
 
 export default function Page({
   params: { title },
@@ -31,18 +32,20 @@ export default function Page({
   return (
     <Article
       header={
-        <header className="page-content mb-[10px]">
+        <header className="PageContent px-8 py-6 mb-[10px]">
           <H1>{post.title}</H1>
           <Tags tags={post.tags} />
+          <p>发布于 {formateDate(post.date)}</p>
         </header>
       }
       renderedBody={renderedMDX}
+      title={post.title}
       toc={post.meta.toc}
-      footer={
-        <footer className="page-content mt-[10px]">
-          <div>relative articles</div>
-        </footer>
-      }
+      // footer={
+      //   <footer className="PageContent mt-[10px]">
+      //     <div>relative articles</div>
+      //   </footer>
+      // }
     />
   )
 }

@@ -24,14 +24,14 @@ const Section = ({
   children: ReactNode
 }) => {
   const H = h[`H${level < 6 ? level : 6}`]
-  // const hashtagLink = encodeURIComponent(title)
+  const hashtagLink = encodeURIComponent(title)
 
   return (
     <section>
-      <H id={title} className="font-bold group">
+      <H id={title} className="group">
         <a
           className="text-inherit relative before:content-['#'] before:absolute before:translate-x-[-125%] before:opacity-0 hover:before:opacity-100 group-target:before:opacity-100"
-          href={`#${title}`}
+          href={`#${hashtagLink}`}
         >
           {title}
         </a>

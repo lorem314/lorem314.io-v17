@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Page = () => {
   return (
-    <div className="my-8 mx-auto p-4 rounded shadow bg-white max-w-[56rem]">
+    <div className="PageContent max-w-[56rem] mx-auto my-[2rem]">
       {/*  */}
 
       <div className="flex justify-between items-center">

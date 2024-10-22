@@ -44,37 +44,6 @@ const SettingPage = () => {
         />
         总是折叠左侧抽屉
       </label>
-
-      <div>
-        <p className="text-LightContent-0 dark:text-DarkContent-0">
-          Lorem ipsum dolor sit, amet consectetur adipisicing.
-        </p>
-        <p className="text-LightContent-1 dark:text-DarkContent-1">
-          Lorem ipsum dolor sit, amet consectetur adipisicing.
-        </p>
-        <p className="text-LightContent-2 dark:text-DarkContent-2">
-          Lorem ipsum dolor sit, amet consectetur adipisicing.
-        </p>
-        <p className="text-LightContent-3 dark:text-DarkContent-3">
-          Lorem ipsum dolor sit, amet consectetur adipisicing.
-        </p>
-      </div>
-      {/* <div className="px-4 py-2 rounded text-black bg-white dark:text-white dark:bg-black">
-        <p className="">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis
-          obcaecati alias maxime eaque earum autem mollitia ducimus sunt
-          molestias ut aperiam eligendi dignissimos excepturi quae perferendis
-          ipsum repudiandae asperiores dicta, fuga nesciunt eos numquam
-          provident atque expedita? Optio quis voluptates veritatis magnam
-          itaque sit, aliquam sed earum ducimus voluptatem cumque commodi
-          nostrum laudantium numquam sunt et beatae quisquam dolorum? Natus
-          perferendis nisi, consequatur quos nulla consequuntur magni numquam
-          doloribus impedit illo aspernatur laboriosam asperiores maiores soluta
-          alias! Ullam deleniti quae, eligendi autem nemo animi ratione dicta
-          id. Eum, magni voluptatibus iusto, quia, doloremque facere non harum
-          odio nesciunt quidem ut!
-        </p>
-      </div> */}
     </div>
   )
 }
