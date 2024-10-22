@@ -2,9 +2,8 @@ import { notFound } from "next/navigation"
 import { useMDXComponent } from "next-contentlayer/hooks"
 import { allBookChapters } from "contentlayer/generated"
 
-import CodeHikePre from "@/components/elements/CodeHikePre"
 import Article from "@/components/article/Article"
-import Link from "next/link"
+import components from "@/components/elements"
 
 export default function Page({
   params: { chapter, title },
@@ -21,20 +20,7 @@ export default function Page({
 
   const MDXContent = useMDXComponent(bookChapter.body.code)
 
-  const renderedMDX = (
-    <MDXContent
-      components={{
-        CodeHikePre,
-        blockquote: (props) => (
-          <blockquote className="my-4 border-l-4 border-neutral-400 px-4 py-2 bg-slate-200 dark:bg-slate-700">
-            {props.children}
-          </blockquote>
-        ),
-        a: (props) => <Link href={props.href || "/"}>{props.children}</Link>,
-        p: (props) => <p className="my-4">{props.children}</p>,
-      }}
-    />
-  )
+  const renderedMDX = <MDXContent components={components} />
 
   return (
     <Article

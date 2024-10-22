@@ -169,14 +169,15 @@ ul.tree-list > li:last-child > details .details-head.no-items-item::before {
 
 /* table */
 table {
-  @apply border border-neutral-300;
+  /* width: 100%; */
+  max-width: 100%;
   border-collapse: collapse;
+  @apply text-left rtl:text-right;
+  @apply text-gray-500 dark:text-gray-400;
 }
-thead {
-  @apply bg-neutral-200;
+th {
+  @apply px-6 py-3;
 }
-th,
 td {
-  padding: 0.5rem 0.75rem;
-  @apply border border-neutral-300;
+  @apply px-6 py-3;
 }

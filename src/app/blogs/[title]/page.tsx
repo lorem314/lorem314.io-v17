@@ -2,11 +2,12 @@ import { notFound } from "next/navigation"
 import { allBlogs } from "contentlayer/generated"
 import { useMDXComponent } from "next-contentlayer/hooks"
 
-import CodeHikePre from "@/components/elements/CodeHikePre"
 import Tags from "@/components/blogs/Tags"
 import Article from "@/components/article/Article"
 import { H1 } from "@/components/elements/headings"
 import { formateDate } from "@/utils/date"
+
+import components from "@/components/elements"
 
 export default function Page({
   params: { title },
@@ -21,13 +22,7 @@ export default function Page({
 
   const MDXContent = useMDXComponent(post.body.code)
 
-  const renderedMDX = (
-    <MDXContent
-      components={{
-        CodeHikePre,
-      }}
-    />
-  )
+  const renderedMDX = <MDXContent components={components} />
 
   return (
     <Article

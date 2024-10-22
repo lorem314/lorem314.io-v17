@@ -10,18 +10,20 @@ const Table = ({
   children: ReactNode
 }) => {
   return (
-    <table
-      className="mx-auto my-4"
-      id={id ? `表格${id}${title || ""}` : undefined}
-    >
-      {title ? (
-        <caption className="text-neutral-500">
-          {id ? `表格 ${id} ` : ""}
-          {title}
-        </caption>
-      ) : null}
-      {children}
-    </table>
+    <div className="relative overflow-x-auto">
+      <table
+        className="mx-auto my-4"
+        id={id ? `表格${id}${title || ""}` : undefined}
+      >
+        {title ? (
+          <caption className="mb-2">
+            {id ? `表格 ${id} ` : ""}
+            {title}
+          </caption>
+        ) : null}
+        {children}
+      </table>
+    </div>
   )
 }
 
@@ -33,7 +35,7 @@ type Th = Td
 export const Thead = ({ ths }: { ths: Th[] }) => {
   return (
     <thead>
-      <tr>
+      <tr className="bg-gray-100 dark:bg-gray-700">
         {ths.map((th, index) => (
           <th key={index} scope="col">
             {th}
@@ -50,8 +52,12 @@ export const Tbody = ({ children }: { children: ReactNode }) => {
 
 export const Tr = ({ th, tds }: { th?: Td; tds: Td[] }) => {
   return (
-    <tr>
-      {th ? <th scope="row">{th}</th> : null}
+    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+      {th ? (
+        <th className="" scope="row">
+          {th}
+        </th>
+      ) : null}
       {tds.map((td, index) => (
         <td key={index}>{td}</td>
       ))}
