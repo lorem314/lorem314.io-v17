@@ -183,7 +183,7 @@ const getRightDrawerProps = (pathname: string) => {
     return { bp: 1024, icon: AiOutlineTags }
   } else if (length === 2 && splitted[1] === "books") {
     // /books
-    return { bp: 1024, icon: RiMenu2Fill }
+    return { bp: 0, icon: RiMenu2Fill }
   } else if (length === 3 && splitted[1] === "blogs") {
     // /blogs/[blog-title]
     return { bp: 1024, icon: VscListTree }
